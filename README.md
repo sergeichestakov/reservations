@@ -1,4 +1,6 @@
-# Globe Project
+# Reservation Dashboard
+
+Built using Typescript, Next.js, and Chakra
 
 ### Development
 

@@ -1,5 +1,5 @@
 {
-  "name": "globe-project",
+  "name": "reservations-dashboard",
   "version": "0.1.0",
   "scripts": {
     "dev": "next",
