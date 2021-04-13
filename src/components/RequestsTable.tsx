@@ -17,8 +17,8 @@ import { RequestStatus, ReservationRequest } from "../types";
 interface Props {
   status: RequestStatus;
   requests: ReservationRequest[];
-  onApproveClick: (index: number) => void;
-  onRejectClick: (index: number) => void;
+  onApproveClick: (id: string) => void;
+  onRejectClick: (id: string) => void;
 }
 
 export default function RequestsTable({
@@ -55,8 +55,8 @@ export default function RequestsTable({
             {isPending ? (
               <Td>
                 <AcceptRejectButtons
-                  onApproveClick={() => onApproveClick(index)}
-                  onRejectClick={() => onRejectClick(index)}
+                  onApproveClick={() => onApproveClick(request.id)}
+                  onRejectClick={() => onRejectClick(request.id)}
                 />
               </Td>
             ) : null}

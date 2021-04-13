@@ -20,18 +20,10 @@ export default function Index() {
   );
 
   function createOnClickHandler(status: RequestStatus) {
-    return function onClick(index: number) {
+    return function onClick(resId: string) {
       setReservations((prevReservations) => {
-        let pendingRes = -1;
-        // We don't have a way to uniquely identify each request with the provided data
         return prevReservations.map((res) => {
-          // so we'll count all of the pending requests we see sequentially
-          if (res.status === RequestStatus.REQUEST) {
-            pendingRes++;
-          }
-
-          // until we find the on we clicked!
-          if (pendingRes === index) {
+          if (res.id === resId) {
             return {
               ...res,
               status,
