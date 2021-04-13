@@ -17,9 +17,16 @@ import { RequestStatus, ReservationRequest } from "../types";
 interface Props {
   status: RequestStatus;
   requests: ReservationRequest[];
+  onApproveClick: (index: number) => void;
+  onRejectClick: (index: number) => void;
 }
 
-export default function RequestsTable({ status, requests }: Props) {
+export default function RequestsTable({
+  status,
+  requests,
+  onApproveClick,
+  onRejectClick,
+}: Props) {
   const filtered = requests.filter((req) => req.status === status);
   const isPending = status === RequestStatus.REQUEST;
 
@@ -47,7 +54,10 @@ export default function RequestsTable({ status, requests }: Props) {
             </Td>
             {isPending ? (
               <Td>
-                <AcceptRejectButtons />
+                <AcceptRejectButtons
+                  onApproveClick={() => onApproveClick(index)}
+                  onRejectClick={() => onRejectClick(index)}
+                />
               </Td>
             ) : null}
             <Td>
@@ -68,15 +78,31 @@ export default function RequestsTable({ status, requests }: Props) {
   );
 }
 
-function AcceptRejectButtons() {
+function AcceptRejectButtons({
+  onApproveClick,
+  onRejectClick,
+}: {
+  onApproveClick: () => void;
+  onRejectClick: () => void;
+}) {
   return (
     <HStack>
-      <Button width="75px" colorScheme="green" variant="outline">
+      <Button
+        width="75px"
+        colorScheme="green"
+        variant="outline"
+        onClick={onApproveClick}
+      >
         <Text fontSize="15px" fontStyle="italic">
           Approve
         </Text>
       </Button>
-      <Button width="70px" colorScheme="red" variant="outline">
+      <Button
+        width="70px"
+        colorScheme="red"
+        variant="outline"
+        onClick={onRejectClick}
+      >
         <Text fontSize="15px" fontStyle="italic">
           Reject
         </Text>

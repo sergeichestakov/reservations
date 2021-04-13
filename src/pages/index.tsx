@@ -18,9 +18,40 @@ const NUM_SAMPLE_RESERVATIONS = 4;
 const SAMPLE_RESERVATIONS = Array(NUM_SAMPLE_RESERVATIONS).fill(reservation);
 
 export default function Index() {
-  const [reservations] = React.useState<ReservationRequest[]>(
+  const [reservations, setReservations] = React.useState<ReservationRequest[]>(
     SAMPLE_RESERVATIONS
   );
+
+  function createOnClickHandler(status: RequestStatus) {
+    return function onClick(index: number) {
+      setReservations((prevReservations) => {
+        let pendingRes = -1;
+        // We don't have a way to uniquely identify each request with the provided data
+        return prevReservations.map((res) => {
+          // so we'll count all of the pending requests we see sequentially
+          if (res.status === RequestStatus.REQUEST) {
+            pendingRes++;
+          }
+
+          // until we find the on we clicked!
+          if (pendingRes === index) {
+            return {
+              ...res,
+              status,
+            };
+          }
+
+          return res;
+        });
+      });
+    };
+  }
+
+  const commonProps = {
+    requests: reservations,
+    onApproveClick: createOnClickHandler(RequestStatus.ACCEPTED),
+    onRejectClick: createOnClickHandler(RequestStatus.REJECTED),
+  };
 
   return (
     <Container height="100vh">
@@ -37,22 +68,13 @@ export default function Index() {
 
         <TabPanels>
           <TabPanel>
-            <RequestsTable
-              status={RequestStatus.REQUEST}
-              requests={reservations}
-            />
+            <RequestsTable status={RequestStatus.REQUEST} {...commonProps} />
           </TabPanel>
           <TabPanel>
-            <RequestsTable
-              status={RequestStatus.ACCEPTED}
-              requests={reservations}
-            />
+            <RequestsTable status={RequestStatus.ACCEPTED} {...commonProps} />
           </TabPanel>
           <TabPanel>
-            <RequestsTable
-              status={RequestStatus.REJECTED}
-              requests={reservations}
-            />
+            <RequestsTable status={RequestStatus.REJECTED} {...commonProps} />
           </TabPanel>
         </TabPanels>
       </Tabs>
