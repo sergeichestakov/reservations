@@ -43,13 +43,8 @@ export default function RequestsTable({
   const isPending = status === RequestStatus.REQUEST;
 
   return (
-    <VStack>
-      <Heading
-        as="h4"
-        size="22px"
-        width="100%"
-        paddingLeft="var(--chakra-space-5)"
-      >
+    <VStack align="start">
+      <Heading as="h3" size="40px" paddingLeft="var(--chakra-space-5)">
         {pluralize(`${numResults} Request`, numResults)}
       </Heading>
       <Table variant="simple">

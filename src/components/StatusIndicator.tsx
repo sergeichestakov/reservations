@@ -17,7 +17,7 @@ export default function StatusIndicator({
   return (
     <HStack>
       <Circle size={circleSize} bg={color} />{" "}
-      <Text fontSize={fontSize} color={color}>
+      <Text fontSize={fontSize} color={color} fontStyle="italic">
         {text}
       </Text>
     </HStack>
