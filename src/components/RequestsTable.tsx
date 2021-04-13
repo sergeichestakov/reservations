@@ -13,6 +13,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { RequestStatus, ReservationRequest } from "../types";
+import { CheckCircleIcon } from "@chakra-ui/icons";
 
 interface Props {
   searchValue: string;
@@ -66,7 +67,9 @@ export default function RequestsTable({
             <Td>
               <DateRange start={request.startDate} end={request.endDate} />
             </Td>
-            <Td>{request.guestName}</Td>
+            <Td>
+              <GuestName name={request.guestName} />
+            </Td>
             <Td>
               <RoomDescription
                 numRooms={request.rooms}
@@ -141,6 +144,15 @@ function StatusIndicator({ status }: { status: RequestStatus }) {
       throw new Error(`Received unexpected status: ${status}`);
     }
   }
+}
+
+function GuestName({ name }: { name: string }) {
+  return (
+    <HStack>
+      <Text fontStyle="italic">{name}</Text>
+      <CheckCircleIcon color="#1781FF" />
+    </HStack>
+  );
 }
 
 const removeLeadingZeros = (strNumber: string) => strNumber.replace(/^0+/, "");
