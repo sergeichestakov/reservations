@@ -51,7 +51,11 @@ export default function DetailsDrawer({ onClose, reservation }: Props) {
               <Heading as="h5" size="sm" fontWeight="normal">
                 Reservation details
               </Heading>
-              <StatusIndicator status={reservation?.status as RequestStatus} />
+              <StatusIndicator
+                status={reservation?.status as RequestStatus}
+                circleSize="6px"
+                fontSize="15px"
+              />
             </HStack>
             <HStack width="272px" height="180px" overflow="hidden" margin="0">
               <Image

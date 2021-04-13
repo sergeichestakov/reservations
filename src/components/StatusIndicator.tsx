@@ -2,13 +2,24 @@ import * as React from "react";
 import { HStack, Circle, Text } from "@chakra-ui/react";
 import { RequestStatus } from "../types";
 
-export default function StatusIndicator({ status }: { status: RequestStatus }) {
+export default function StatusIndicator({
+  status,
+  circleSize = "8px",
+  fontSize,
+}: {
+  status: RequestStatus;
+  circleSize?: string;
+  fontSize?: string;
+}) {
   const color = getColorForStatus(status);
   const text = getTextForStatus(status);
 
   return (
     <HStack>
-      <Circle size="8px" bg={color} /> <Text color={color}>{text}</Text>
+      <Circle size={circleSize} bg={color} />{" "}
+      <Text fontSize={fontSize} color={color}>
+        {text}
+      </Text>
     </HStack>
   );
 }
