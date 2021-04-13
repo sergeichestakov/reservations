@@ -48,7 +48,7 @@ export default function Index() {
     searchValue,
     onApproveClick: createOnClickHandler(RequestStatus.ACCEPTED),
     onRejectClick: createOnClickHandler(RequestStatus.REJECTED),
-    onDetailsClick: setExpandedReservation,
+    onDetailsClick: (id: string) => setExpandedReservation(id),
   };
 
   return (
