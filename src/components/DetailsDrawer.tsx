@@ -3,34 +3,36 @@ import {
   Drawer,
   DrawerOverlay,
   DrawerCloseButton,
-  DrawerHeader,
   DrawerBody,
   DrawerContent,
-  Text,
   Heading,
+  Box,
+  Image,
 } from "@chakra-ui/react";
 import { ReservationRequest } from "../types";
 
 interface Props {
-  reservation: ReservationRequest;
-  isOpen: boolean;
+  reservation: ReservationRequest | undefined;
   onClose(): void;
 }
 
-export default function DetailsDrawer({ isOpen, onClose, reservation }: Props) {
+export default function DetailsDrawer({ onClose, reservation }: Props) {
   return (
-    <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+    <Drawer isOpen={Boolean(reservation)} placement="right" onClose={onClose}>
       <DrawerOverlay>
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>
-            <Heading as="h5" size="sm">
-              Reservation Details
-            </Heading>
-          </DrawerHeader>
 
           <DrawerBody>
-            <Text>{reservation.id}</Text>
+            <Heading as="h5" size="sm" paddingTop="30px">
+              Reservation Details
+            </Heading>
+            <Box>
+              <Image
+                src="/reservation.jpg"
+                alt={reservation?.listingType || "reservation"}
+              />
+            </Box>
           </DrawerBody>
         </DrawerContent>
       </DrawerOverlay>

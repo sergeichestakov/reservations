@@ -57,8 +57,7 @@ export default function Index() {
       </Heading>
       <SearchBar onChange={setSearchValue} />
       <DetailsDrawer
-        isOpen={expandedReservation !== null}
-        reservation={expanded!}
+        reservation={expanded}
         onClose={() => setExpandedReservation(null)}
       />
       <Tabs>
