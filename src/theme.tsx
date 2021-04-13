@@ -19,6 +19,9 @@ const theme = extendTheme({
       orange: "#E79B09",
       red: "#D80A0A",
     },
+    details: {
+      grey: "#6A707D",
+    },
   },
   fonts,
   breakpoints,

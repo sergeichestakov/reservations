@@ -15,7 +15,9 @@ import {
 } from "@chakra-ui/react";
 import { RequestStatus, ReservationRequest } from "../types";
 import StatusIndicator from "./StatusIndicator";
-import { formatPhoneNumber, pluralize } from "../util";
+import { formatPhoneNumber, pluralize, removeLeadingZeros } from "../util";
+
+const ONE_DAY = 86400000;
 
 interface Props {
   reservation: ReservationRequest | undefined;
@@ -23,6 +25,15 @@ interface Props {
 }
 
 export default function DetailsDrawer({ onClose, reservation }: Props) {
+  const numDays = getStayLengthInDays(
+    reservation?.startDate || "",
+    reservation?.endDate || ""
+  );
+  const payout = reservation?.payout || 0;
+  const payoutPerDay = payout / numDays;
+  const serviceFeePercentage = (reservation?.serviceFeePercentage || 0) / 100;
+  const serviceFee = payout * serviceFeePercentage;
+
   return (
     <Drawer isOpen={Boolean(reservation)} placement="right" onClose={onClose}>
       <DrawerOverlay>
@@ -81,11 +92,36 @@ export default function DetailsDrawer({ onClose, reservation }: Props) {
                 />
                 <BookingDetail
                   label="Check-in"
-                  value={reservation?.startDate || ""}
+                  value={formatDateTime(
+                    reservation?.startDate || "",
+                    reservation?.startTime || ""
+                  )}
                 />
                 <BookingDetail
                   label="Check-out"
-                  value={reservation?.endDate || ""}
+                  value={formatDateTime(
+                    reservation?.endDate || "",
+                    reservation?.endTime || ""
+                  )}
+                />
+              </VStack>
+              <VStack paddingTop="25px">
+                <Summary
+                  label="Payout"
+                  light
+                  value={`Rate: $${payoutPerDay} per day`}
+                />
+                <Summary
+                  label={`${pluralize(`${numDays} Day`, numDays)}`}
+                  value={`$${reservation?.payout || 0}.00`}
+                />
+                <Summary
+                  label={`Service Fee (${reservation?.serviceFeePercentage} %)`}
+                  value={`$${serviceFee}.00`}
+                />
+                <Summary
+                  label="Total (USD)"
+                  value={`$${payout + serviceFee}.00`}
                 />
               </VStack>
             </Box>
@@ -93,6 +129,28 @@ export default function DetailsDrawer({ onClose, reservation }: Props) {
         </DrawerContent>
       </DrawerOverlay>
     </Drawer>
+  );
+}
+
+function Summary({
+  label,
+  value,
+  light,
+}: {
+  label: string;
+  value: string;
+  light?: boolean;
+}) {
+  return (
+    <HStack
+      height="20px"
+      width="100%"
+      justifyContent="space-between"
+      paddingTop="15px"
+    >
+      <Text>{label}</Text>
+      <Text color={light ? "details.grey" : "black"}>{value}</Text>
+    </HStack>
   );
 }
 
@@ -114,4 +172,19 @@ function BookingDetail({
       <Text>{value}</Text>
     </HStack>
   );
+}
+
+function formatDateTime(dateStr: string, time: string) {
+  const date = new Date(dateStr);
+
+  const [dayOfTheWeek, month, day] = date.toDateString().split(" ");
+
+  return `${dayOfTheWeek} ${month} ${removeLeadingZeros(day || "")} @ ${time}`;
+}
+
+function getStayLengthInDays(start: string, end: string) {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+
+  return Math.round((endDate.valueOf() - startDate.valueOf()) / ONE_DAY);
 }
