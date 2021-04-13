@@ -10,6 +10,7 @@ import {
   VStack,
   Circle,
   HStack,
+  Button,
 } from "@chakra-ui/react";
 import { RequestStatus, ReservationRequest } from "../types";
 
@@ -44,7 +45,11 @@ export default function RequestsTable({ status, requests }: Props) {
             <Td>
               <StatusIndicator status={request.status as RequestStatus} />
             </Td>
-            {isPending ? <Td>Button</Td> : null}
+            {isPending ? (
+              <Td>
+                <AcceptRejectButtons />
+              </Td>
+            ) : null}
             <Td>
               <DateRange start={request.startDate} end={request.endDate} />
             </Td>
@@ -60,6 +65,23 @@ export default function RequestsTable({ status, requests }: Props) {
         ))}
       </Tbody>
     </Table>
+  );
+}
+
+function AcceptRejectButtons() {
+  return (
+    <HStack>
+      <Button width="75px" colorScheme="green" variant="outline">
+        <Text fontSize="15px" fontStyle="italic">
+          Approve
+        </Text>
+      </Button>
+      <Button width="70px" colorScheme="red" variant="outline">
+        <Text fontSize="15px" fontStyle="italic">
+          Reject
+        </Text>
+      </Button>
+    </HStack>
   );
 }
 
