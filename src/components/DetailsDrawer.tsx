@@ -12,10 +12,12 @@ import {
   Text,
   VStack,
   Box,
+  AvatarBadge,
 } from "@chakra-ui/react";
 import { RequestStatus, ReservationRequest } from "../types";
 import StatusIndicator from "./StatusIndicator";
 import { formatPhoneNumber, pluralize, removeLeadingZeros } from "../util";
+import { CheckCircleIcon } from "@chakra-ui/icons";
 
 const ONE_DAY = 86400000;
 
@@ -46,8 +48,8 @@ export default function DetailsDrawer({ onClose, reservation }: Props) {
               paddingBottom="10px"
               justifyContent="space-between"
             >
-              <Heading as="h5" size="sm">
-                Reservation Details
+              <Heading as="h5" size="sm" fontWeight="normal">
+                Reservation details
               </Heading>
               <StatusIndicator status={reservation?.status as RequestStatus} />
             </HStack>
@@ -64,18 +66,25 @@ export default function DetailsDrawer({ onClose, reservation }: Props) {
                 <Avatar
                   src={reservation?.profilePicture}
                   name={reservation?.guestName}
-                />
+                  size="sm"
+                >
+                  <AvatarBadge>
+                    <CheckCircleIcon color="request.blue" />
+                  </AvatarBadge>
+                </Avatar>
                 <Text>{reservation?.guestName}</Text>
               </HStack>
               <VStack spacing={0.25} alignItems="start">
                 <Text fontSize="xs" fontWeight="hairline">
                   Guest number
                 </Text>
-                <Text>{formatPhoneNumber(reservation?.guestNumber || "")}</Text>
+                <Text fontSize="14px">
+                  {formatPhoneNumber(reservation?.guestNumber || "")}
+                </Text>
               </VStack>
             </HStack>
             <Box fontSize="12px" paddingTop="30px">
-              <Heading as="h5" size="sm">
+              <Heading as="h5" size="sm" fontWeight="normal">
                 Booking Details
               </Heading>
               <VStack>
@@ -120,7 +129,7 @@ export default function DetailsDrawer({ onClose, reservation }: Props) {
                   value={`$${reservation?.payout || 0}.00`}
                 />
                 <Summary
-                  label={`Service Fee (${reservation?.serviceFeePercentage} %)`}
+                  label={`Service Fee (${reservation?.serviceFeePercentage}%)`}
                   value={`-$${serviceFee}.00`}
                 />
                 <Summary
