@@ -19,6 +19,9 @@ export default function Index() {
     sampleReservations
   );
   const [searchValue, setSearchValue] = React.useState<string>("");
+  const [expandedReservation, setExpandedReservation] = React.useState<
+    string | null
+  >(null);
 
   function createOnClickHandler(status: RequestStatus) {
     return function onClick(resId: string) {
@@ -42,6 +45,7 @@ export default function Index() {
     searchValue,
     onApproveClick: createOnClickHandler(RequestStatus.ACCEPTED),
     onRejectClick: createOnClickHandler(RequestStatus.REJECTED),
+    onDetailsClick: setExpandedReservation,
   };
 
   return (

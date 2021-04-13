@@ -23,12 +23,14 @@ interface Props {
   requests: ReservationRequest[];
   onApproveClick: (id: string) => void;
   onRejectClick: (id: string) => void;
+  onDetailsClick: (id: string) => void;
 }
 
 export default function RequestsTable({
   status,
   requests,
   searchValue,
+  onDetailsClick,
   onApproveClick,
   onRejectClick,
 }: Props) {
@@ -54,6 +56,7 @@ export default function RequestsTable({
             <Th>Guest</Th>
             <Th>Type of Room</Th>
             <Th>Payout</Th>
+            <Th />
           </Tr>
         </Thead>
         <Tbody>
@@ -83,6 +86,9 @@ export default function RequestsTable({
                 />
               </Td>
               <Td>${request.payout}.00</Td>
+              <Td>
+                <DetailsButton onClick={() => onDetailsClick(request.id)} />
+              </Td>
             </Tr>
           ))}
         </Tbody>
@@ -194,5 +200,15 @@ function RoomDescription({
         {listingType}
       </Text>
     </VStack>
+  );
+}
+
+function DetailsButton({ onClick }: { onClick: () => void }) {
+  return (
+    <Button width="75px" variant="outline">
+      <Text fontSize="15px" fontStyle="italic" onClick={onClick}>
+        Details
+      </Text>
+    </Button>
   );
 }
