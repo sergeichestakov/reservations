@@ -1,5 +1,16 @@
 import * as React from "react";
-import { Text, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
+import {
+  Text,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  VStack,
+  Circle,
+  HStack,
+} from "@chakra-ui/react";
 import { RequestStatus, ReservationRequest } from "../types";
 
 interface Props {
@@ -30,19 +41,86 @@ export default function RequestsTable({ status, requests }: Props) {
       <Tbody>
         {filtered.map((request, index) => (
           <Tr key={index}>
-            <Td>{request.status}</Td>
+            <Td>
+              <StatusIndicator status={request.status as RequestStatus} />
+            </Td>
             {isPending ? <Td>Button</Td> : null}
             <Td>
-              {request.startDate} - {request.endDate}
+              <DateRange start={request.startDate} end={request.endDate} />
             </Td>
             <Td>{request.guestName}</Td>
             <Td>
-              {request.rooms} Rooms - {request.listingType}
+              <RoomDescription
+                numRooms={request.rooms}
+                listingType={request.listingType}
+              />
             </Td>
-            <Td>{request.payout}</Td>
+            <Td>${request.payout}.00</Td>
           </Tr>
         ))}
       </Tbody>
     </Table>
+  );
+}
+
+function StatusIndicator({ status }: { status: RequestStatus }) {
+  switch (status) {
+    case RequestStatus.REQUEST: {
+      return (
+        <HStack>
+          <Circle size="8px" bg="orange" /> <Text color="orange">Request</Text>
+        </HStack>
+      );
+    }
+    case RequestStatus.ACCEPTED: {
+      return (
+        <HStack>
+          <Circle size="8px" bg="green" /> <Text color="green">Accepted</Text>
+        </HStack>
+      );
+    }
+    case RequestStatus.REJECTED: {
+      return (
+        <HStack>
+          <Circle size="8px" bg="red" /> <Text color="red">Rejected</Text>
+        </HStack>
+      );
+    }
+    default: {
+      throw new Error(`Received unexpected status: ${status}`);
+    }
+  }
+}
+
+const removeLeadingZeros = (strNumber: string) => strNumber.replace(/^0+/, "");
+
+function DateRange({ start, end }: { start: string; end: string }) {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  const [, startMonth, startDay] = startDate.toDateString().split(" ");
+  const [, endMonth, endDay] = endDate.toDateString().split(" ");
+
+  return (
+    <Text>
+      {startMonth} {removeLeadingZeros(startDay)} - {endMonth}{" "}
+      {removeLeadingZeros(endDay)}
+    </Text>
+  );
+}
+
+function RoomDescription({
+  numRooms,
+  listingType,
+}: {
+  numRooms: number;
+  listingType: string;
+}) {
+  return (
+    <VStack spacing={1}>
+      <Text>{numRooms} Rooms</Text>
+      <Text size="sm" fontStyle="italic" color="gray.500">
+        {listingType}
+      </Text>
+    </VStack>
   );
 }
