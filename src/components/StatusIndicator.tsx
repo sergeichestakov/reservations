@@ -5,9 +5,11 @@ import { RequestStatus } from "../types";
 export default function StatusIndicator({
   status,
   circleSize = "8px",
+  fontStyle = "italic",
   fontSize,
 }: {
   status: RequestStatus;
+  fontStyle?: string;
   circleSize?: string;
   fontSize?: string;
 }) {
@@ -17,7 +19,7 @@ export default function StatusIndicator({
   return (
     <HStack>
       <Circle size={circleSize} bg={color} />{" "}
-      <Text fontSize={fontSize} color={color} fontStyle="italic">
+      <Text fontSize={fontSize} color={color} fontStyle={fontStyle}>
         {text}
       </Text>
     </HStack>

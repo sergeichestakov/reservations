@@ -80,13 +80,13 @@ export default function Index() {
         </TabList>
 
         <TabPanels>
-          <TabPanel paddingLeft="0">
+          <TabPanel paddingLeft="0" overflowX="scroll">
             <RequestsTable status={RequestStatus.REQUEST} {...commonProps} />
           </TabPanel>
-          <TabPanel paddingLeft="0">
+          <TabPanel paddingLeft="0" overflowX="scroll">
             <RequestsTable status={RequestStatus.ACCEPTED} {...commonProps} />
           </TabPanel>
-          <TabPanel paddingLeft="0">
+          <TabPanel paddingLeft="0" overflowX="scroll">
             <RequestsTable status={RequestStatus.REJECTED} {...commonProps} />
           </TabPanel>
         </TabPanels>

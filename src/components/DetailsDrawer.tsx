@@ -42,7 +42,7 @@ export default function DetailsDrawer({ onClose, reservation }: Props) {
         <DrawerContent>
           <DrawerCloseButton />
 
-          <DrawerBody>
+          <DrawerBody fontFamily="Abel">
             <HStack
               paddingTop="35px"
               paddingBottom="10px"
@@ -53,6 +53,7 @@ export default function DetailsDrawer({ onClose, reservation }: Props) {
               </Heading>
               <StatusIndicator
                 status={reservation?.status as RequestStatus}
+                fontStyle="normal"
                 circleSize="6px"
                 fontSize="15px"
               />
