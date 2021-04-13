@@ -41,7 +41,11 @@ export default function DetailsDrawer({ onClose, reservation }: Props) {
           <DrawerCloseButton />
 
           <DrawerBody>
-            <HStack paddingTop="30px" justifyContent="space-between">
+            <HStack
+              paddingTop="35px"
+              paddingBottom="10px"
+              justifyContent="space-between"
+            >
               <Heading as="h5" size="sm">
                 Reservation Details
               </Heading>
@@ -55,7 +59,7 @@ export default function DetailsDrawer({ onClose, reservation }: Props) {
                 alt={reservation?.listingType || "reservation"}
               />
             </HStack>
-            <HStack justifyContent="space-between">
+            <HStack justifyContent="space-between" paddingTop="15px">
               <HStack>
                 <Avatar
                   src={reservation?.profilePicture}
@@ -70,7 +74,7 @@ export default function DetailsDrawer({ onClose, reservation }: Props) {
                 <Text>{formatPhoneNumber(reservation?.guestNumber || "")}</Text>
               </VStack>
             </HStack>
-            <Box fontSize="12px">
+            <Box fontSize="12px" paddingTop="30px">
               <Heading as="h5" size="sm">
                 Booking Details
               </Heading>
@@ -117,7 +121,7 @@ export default function DetailsDrawer({ onClose, reservation }: Props) {
                 />
                 <Summary
                   label={`Service Fee (${reservation?.serviceFeePercentage} %)`}
-                  value={`$${serviceFee}.00`}
+                  value={`-$${serviceFee}.00`}
                 />
                 <Summary
                   label="Total (USD)"
@@ -163,7 +167,7 @@ function BookingDetail({
 }) {
   return (
     <HStack
-      height="60px"
+      height="40px"
       width="100%"
       borderBottom="1px solid #E4E4E4"
       justifyContent="space-between"
