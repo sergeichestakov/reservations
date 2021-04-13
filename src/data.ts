@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { getRandomElement, getRandomInt } from "./util";
 
-const NUM_SAMPLE_RESERVATIONS = 4;
 const LISTING_TYPES = [
   "Penthouse Room Office",
   "Standard Room Office",
@@ -16,6 +15,19 @@ const SAMPLE_NAMES = [
   "Manny",
   "Omar",
   "Masoud",
+  "Eric",
+  "Joe",
+  "Ashley",
+  "Dennis",
+  "Bob",
+  "Zoe",
+  "Nick",
+  "Emma",
+  "Jill",
+  "Erica",
+  "David",
+  "Matt",
+  "Dan",
 ];
 
 export const reservation = {
@@ -55,7 +67,7 @@ function createSampleReservation() {
   };
 }
 
-const sampleReservations = Array(NUM_SAMPLE_RESERVATIONS)
+const sampleReservations = Array(getRandomInt(4, 10))
   .fill(null)
   .map(() => createSampleReservation());
 
