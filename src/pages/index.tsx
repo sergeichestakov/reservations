@@ -10,8 +10,18 @@ import {
 import Container from "../components/Container";
 import DarkModeSwitch from "../components/DarkModeSwitch";
 import SearchBar from "../components/SearchBar";
+import RequestsTable from "../components/RequestsTable";
+import { RequestStatus, ReservationRequest } from "../types";
+import reservation from "../data";
+
+const NUM_SAMPLE_RESERVATIONS = 4;
+const SAMPLE_RESERVATIONS = Array(NUM_SAMPLE_RESERVATIONS).fill(reservation);
 
 export default function Index() {
+  const [reservations] = React.useState<ReservationRequest[]>(
+    SAMPLE_RESERVATIONS
+  );
+
   return (
     <Container height="100vh">
       <Heading as="h4" size="md">
@@ -27,13 +37,22 @@ export default function Index() {
 
         <TabPanels>
           <TabPanel>
-            <p>Requests</p>
+            <RequestsTable
+              status={RequestStatus.REQUEST}
+              requests={reservations}
+            />
           </TabPanel>
           <TabPanel>
-            <p>Accepted</p>
+            <RequestsTable
+              status={RequestStatus.ACCEPTED}
+              requests={reservations}
+            />
           </TabPanel>
           <TabPanel>
-            <p>Rejected</p>
+            <RequestsTable
+              status={RequestStatus.REJECTED}
+              requests={reservations}
+            />
           </TabPanel>
         </TabPanels>
       </Tabs>
