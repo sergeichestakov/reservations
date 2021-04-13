@@ -13,6 +13,7 @@ import SearchBar from "../components/SearchBar";
 import RequestsTable from "../components/RequestsTable";
 import { RequestStatus, ReservationRequest } from "../types";
 import sampleReservations from "../data";
+import DetailsDrawer from "../components/DetailsDrawer";
 
 export default function Index() {
   const [reservations, setReservations] = React.useState<ReservationRequest[]>(
@@ -22,6 +23,7 @@ export default function Index() {
   const [expandedReservation, setExpandedReservation] = React.useState<
     string | null
   >(null);
+  const expanded = reservations.find((r) => r.id === expandedReservation);
 
   function createOnClickHandler(status: RequestStatus) {
     return function onClick(resId: string) {
@@ -54,6 +56,11 @@ export default function Index() {
         Requests & Reservations
       </Heading>
       <SearchBar onChange={setSearchValue} />
+      <DetailsDrawer
+        isOpen={expandedReservation !== null}
+        reservation={expanded!}
+        onClose={() => setExpandedReservation(null)}
+      />
       <Tabs>
         <TabList>
           <Tab>Requests</Tab>
