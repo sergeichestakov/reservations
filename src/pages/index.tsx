@@ -18,6 +18,7 @@ export default function Index() {
   const [reservations, setReservations] = React.useState<ReservationRequest[]>(
     sampleReservations
   );
+  const [searchValue, setSearchValue] = React.useState<string>("");
 
   function createOnClickHandler(status: RequestStatus) {
     return function onClick(resId: string) {
@@ -38,6 +39,7 @@ export default function Index() {
 
   const commonProps = {
     requests: reservations,
+    searchValue,
     onApproveClick: createOnClickHandler(RequestStatus.ACCEPTED),
     onRejectClick: createOnClickHandler(RequestStatus.REJECTED),
   };
@@ -47,7 +49,7 @@ export default function Index() {
       <Heading as="h4" size="md">
         Requests & Reservations
       </Heading>
-      <SearchBar />
+      <SearchBar onChange={setSearchValue} />
       <Tabs>
         <TabList>
           <Tab>Requests</Tab>

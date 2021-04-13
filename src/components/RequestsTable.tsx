@@ -15,6 +15,7 @@ import {
 import { RequestStatus, ReservationRequest } from "../types";
 
 interface Props {
+  searchValue: string;
   status: RequestStatus;
   requests: ReservationRequest[];
   onApproveClick: (id: string) => void;
@@ -24,15 +25,17 @@ interface Props {
 export default function RequestsTable({
   status,
   requests,
+  searchValue,
   onApproveClick,
   onRejectClick,
 }: Props) {
-  const filtered = requests.filter((req) => req.status === status);
-  const isPending = status === RequestStatus.REQUEST;
+  const filtered = requests
+    .filter((req) => req.status === status)
+    .filter((req) =>
+      req.guestName.toLowerCase().includes(searchValue.toLowerCase())
+    );
 
-  if (filtered.length === 0) {
-    return <Text>No requests found</Text>;
-  }
+  const isPending = status === RequestStatus.REQUEST;
 
   return (
     <Table variant="simple">
