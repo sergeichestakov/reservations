@@ -117,40 +117,44 @@ function AcceptRejectButtons({
   );
 }
 
-function StatusIndicator({ status }: { status: RequestStatus }) {
+function getColorForStatus(status: RequestStatus) {
   switch (status) {
-    case RequestStatus.REQUEST: {
-      return (
-        <HStack>
-          <Circle size="8px" bg="orange" /> <Text color="orange">Request</Text>
-        </HStack>
-      );
-    }
-    case RequestStatus.ACCEPTED: {
-      return (
-        <HStack>
-          <Circle size="8px" bg="green" /> <Text color="green">Accepted</Text>
-        </HStack>
-      );
-    }
-    case RequestStatus.REJECTED: {
-      return (
-        <HStack>
-          <Circle size="8px" bg="red" /> <Text color="red">Rejected</Text>
-        </HStack>
-      );
-    }
-    default: {
-      throw new Error(`Received unexpected status: ${status}`);
-    }
+    case RequestStatus.REQUEST:
+      return "request.orange";
+    case RequestStatus.ACCEPTED:
+      return "request.green";
+    case RequestStatus.REJECTED:
+      return "request.red";
   }
+}
+
+function getTextForStatus(status: RequestStatus) {
+  switch (status) {
+    case RequestStatus.REQUEST:
+      return "Request";
+    case RequestStatus.ACCEPTED:
+      return "Accepted";
+    case RequestStatus.REJECTED:
+      return "Rejected";
+  }
+}
+
+function StatusIndicator({ status }: { status: RequestStatus }) {
+  const color = getColorForStatus(status);
+  const text = getTextForStatus(status);
+
+  return (
+    <HStack>
+      <Circle size="8px" bg={color} /> <Text color={color}>{text}</Text>
+    </HStack>
+  );
 }
 
 function GuestName({ name }: { name: string }) {
   return (
     <HStack>
       <Text fontStyle="italic">{name}</Text>
-      <CheckCircleIcon color="#1781FF" />
+      <CheckCircleIcon color="request.blue" />
     </HStack>
   );
 }
