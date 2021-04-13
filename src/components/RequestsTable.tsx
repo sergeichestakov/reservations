@@ -8,7 +8,6 @@ import {
   Th,
   Td,
   VStack,
-  Circle,
   HStack,
   Button,
   Heading,
@@ -16,6 +15,7 @@ import {
 import { removeLeadingZeros, pluralize } from "../util";
 import { RequestStatus, ReservationRequest } from "../types";
 import { CheckCircleIcon } from "@chakra-ui/icons";
+import StatusIndicator from "./StatusIndicator";
 
 interface Props {
   searchValue: string;
@@ -126,39 +126,6 @@ function AcceptRejectButtons({
           Reject
         </Text>
       </Button>
-    </HStack>
-  );
-}
-
-function getColorForStatus(status: RequestStatus) {
-  switch (status) {
-    case RequestStatus.REQUEST:
-      return "request.orange";
-    case RequestStatus.ACCEPTED:
-      return "request.green";
-    case RequestStatus.REJECTED:
-      return "request.red";
-  }
-}
-
-function getTextForStatus(status: RequestStatus) {
-  switch (status) {
-    case RequestStatus.REQUEST:
-      return "Request";
-    case RequestStatus.ACCEPTED:
-      return "Accepted";
-    case RequestStatus.REJECTED:
-      return "Rejected";
-  }
-}
-
-function StatusIndicator({ status }: { status: RequestStatus }) {
-  const color = getColorForStatus(status);
-  const text = getTextForStatus(status);
-
-  return (
-    <HStack>
-      <Circle size="8px" bg={color} /> <Text color={color}>{text}</Text>
     </HStack>
   );
 }
