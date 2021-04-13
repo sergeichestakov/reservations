@@ -127,19 +127,19 @@ export default function DetailsDrawer({ onClose, reservation }: Props) {
                 <Summary
                   label="Payout"
                   light
-                  value={`Rate: $${payoutPerDay} per day`}
+                  value={`Rate: $${payoutPerDay.toFixed(2)} per day`}
                 />
                 <Summary
                   label={`${pluralize(`${numDays} Day`, numDays)}`}
-                  value={`$${reservation?.payout || 0}.00`}
+                  value={`$${(reservation?.payout || 0).toFixed(2)}`}
                 />
                 <Summary
                   label={`Service Fee (${reservation?.serviceFeePercentage}%)`}
-                  value={`-$${serviceFee}.00`}
+                  value={`-$${serviceFee.toFixed(2)}`}
                 />
                 <Summary
                   label="Total (USD)"
-                  value={`$${payout + serviceFee}.00`}
+                  value={`$${(payout + serviceFee).toFixed(2)}`}
                 />
               </VStack>
             </Box>

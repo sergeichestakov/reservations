@@ -85,7 +85,7 @@ export default function RequestsTable({
                   listingType={request.listingType}
                 />
               </Td>
-              <Td>${request.payout}.00</Td>
+              <Td>${request.payout.toFixed(2)}</Td>
               <Td>
                 <DetailsButton onClick={() => onDetailsClick(request.id)} />
               </Td>
@@ -162,7 +162,7 @@ function RoomDescription({
 }) {
   return (
     <VStack spacing={1}>
-      <Text>{numRooms} Rooms</Text>
+      <Text>{pluralize(`${numRooms} Room`, numRooms)}</Text>
       <Text size="sm" fontStyle="italic" color="gray.500">
         {listingType}
       </Text>

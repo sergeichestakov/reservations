@@ -5,6 +5,13 @@ export const pluralize = (str: string, num: number) => {
 export const removeLeadingZeros = (strNumber: string) =>
   strNumber.replace(/^0+/, "");
 
+export const getRandomInt = (min: number, max: number) =>
+  Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) +
+  Math.ceil(min);
+
+export const getRandomElement = (arr: any[]) =>
+  arr[Math.floor(Math.random() * arr.length)];
+
 export const formatPhoneNumber = (str: string) => {
   //Filter only numbers from the input
   let cleaned = ("" + str).replace(/\D/g, "");
