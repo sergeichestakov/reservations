@@ -6,6 +6,7 @@ import {
   TabPanel,
   Tabs,
   Tab,
+  HStack,
 } from "@chakra-ui/react";
 import Container from "../components/Container";
 import DarkModeSwitch from "../components/DarkModeSwitch";
@@ -52,15 +53,26 @@ export default function Index() {
 
   return (
     <Container height="100vh">
-      <Heading as="h4" size="md">
-        Requests & Reservations
-      </Heading>
-      <SearchBar onChange={setSearchValue} />
+      <HStack
+        width="80%"
+        paddingTop="30px"
+        paddingBottom="15px"
+        align="center"
+        justify="space-between"
+      >
+        <Heading as="h4" size="md">
+          Requests & Reservations
+        </Heading>
+        <HStack>
+          <SearchBar onChange={setSearchValue} />
+          <DarkModeSwitch />
+        </HStack>
+      </HStack>
       <DetailsDrawer
         reservation={expanded}
         onClose={() => setExpandedReservation(null)}
       />
-      <Tabs>
+      <Tabs width="80%">
         <TabList>
           <Tab>Requests</Tab>
           <Tab>Accepted</Tab>
@@ -79,7 +91,6 @@ export default function Index() {
           </TabPanel>
         </TabPanels>
       </Tabs>
-      <DarkModeSwitch />
     </Container>
   );
 }

@@ -44,7 +44,12 @@ export default function RequestsTable({
 
   return (
     <VStack>
-      <Heading as="h4" size="22px" paddingLeft="var(--chakra-space-5)">
+      <Heading
+        as="h4"
+        size="22px"
+        width="100%"
+        paddingLeft="var(--chakra-space-5)"
+      >
         {pluralize(`${numResults} Request`, numResults)}
       </Heading>
       <Table variant="simple">

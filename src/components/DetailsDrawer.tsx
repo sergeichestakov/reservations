@@ -166,7 +166,7 @@ function Summary({
       paddingTop="15px"
     >
       <Text>{label}</Text>
-      <Text color={light ? "details.grey" : "black"}>{value}</Text>
+      <Text fontWeight={light ? "hairline" : "normal"}>{value}</Text>
     </HStack>
   );
 }
