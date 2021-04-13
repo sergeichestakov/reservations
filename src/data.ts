@@ -1,4 +1,4 @@
-const data = {
+export default {
   status: "REQUEST",
   startDate: "2021-04-07T00:48:50.494Z",
   endDate: "2021-04-15T00:48:50.494Z",
@@ -14,5 +14,3 @@ const data = {
   profilePicture:
     "https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixid=MXwxMjA3fDB8MHxzZWFyY2h8M3x8cGVyc29ufGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
 };
-
-export default data;
