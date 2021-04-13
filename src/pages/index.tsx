@@ -12,14 +12,11 @@ import DarkModeSwitch from "../components/DarkModeSwitch";
 import SearchBar from "../components/SearchBar";
 import RequestsTable from "../components/RequestsTable";
 import { RequestStatus, ReservationRequest } from "../types";
-import reservation from "../data";
-
-const NUM_SAMPLE_RESERVATIONS = 4;
-const SAMPLE_RESERVATIONS = Array(NUM_SAMPLE_RESERVATIONS).fill(reservation);
+import sampleReservations from "../data";
 
 export default function Index() {
   const [reservations, setReservations] = React.useState<ReservationRequest[]>(
-    SAMPLE_RESERVATIONS
+    sampleReservations
   );
 
   function createOnClickHandler(status: RequestStatus) {

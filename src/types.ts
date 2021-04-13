@@ -1,4 +1,4 @@
-import data from "./data";
+import { reservation } from "./data";
 
 export enum RequestStatus {
   REQUEST = "REQUEST",
@@ -6,4 +6,4 @@ export enum RequestStatus {
   REJECTED = "REJECTED",
 }
 
-export type ReservationRequest = typeof data;
+export type ReservationRequest = typeof reservation;
