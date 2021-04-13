@@ -30,6 +30,9 @@ const theme = extendTheme({
   },
   fonts,
   breakpoints,
+  config: {
+    useSystemColorMode: true,
+  },
 });
 
 export default theme;
