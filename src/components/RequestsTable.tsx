@@ -172,8 +172,8 @@ function RoomDescription({
 
 function DetailsButton({ onClick }: { onClick: () => void }) {
   return (
-    <Button width="75px" variant="outline">
-      <Text fontSize="15px" fontStyle="italic" onClick={onClick}>
+    <Button width="75px" variant="outline" onClick={onClick}>
+      <Text fontSize="15px" fontStyle="italic">
         Details
       </Text>
     </Button>
