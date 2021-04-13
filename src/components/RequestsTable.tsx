@@ -11,7 +11,9 @@ import {
   Circle,
   HStack,
   Button,
+  Heading,
 } from "@chakra-ui/react";
+import { removeLeadingZeros, pluralize } from "../util";
 import { RequestStatus, ReservationRequest } from "../types";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 
@@ -30,57 +32,62 @@ export default function RequestsTable({
   onApproveClick,
   onRejectClick,
 }: Props) {
-  const filtered = requests
-    .filter((req) => req.status === status)
-    .filter((req) =>
-      req.guestName.toLowerCase().includes(searchValue.toLowerCase())
-    );
+  const results = requests.filter((req) => req.status === status);
+  const numResults = results.length;
+  const filtered = results.filter((req) =>
+    req.guestName.toLowerCase().includes(searchValue.toLowerCase())
+  );
 
   const isPending = status === RequestStatus.REQUEST;
 
   return (
-    <Table variant="simple">
-      <Thead>
-        <Tr>
-          <Th>Status</Th>
-          {isPending ? <Th>Accept / Reject</Th> : null}
-          <Th>When</Th>
-          <Th>Guest</Th>
-          <Th>Type of Room</Th>
-          <Th>Payout</Th>
-        </Tr>
-      </Thead>
-      <Tbody>
-        {filtered.map((request, index) => (
-          <Tr key={index}>
-            <Td>
-              <StatusIndicator status={request.status as RequestStatus} />
-            </Td>
-            {isPending ? (
+    <VStack>
+      <Heading as="h4" size="22px" paddingLeft="var(--chakra-space-5)">
+        {pluralize(`${numResults} Request`, numResults)}
+      </Heading>
+      <Table variant="simple">
+        <Thead>
+          <Tr>
+            <Th>Status</Th>
+            {isPending ? <Th>Accept / Reject</Th> : null}
+            <Th>When</Th>
+            <Th>Guest</Th>
+            <Th>Type of Room</Th>
+            <Th>Payout</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {filtered.map((request, index) => (
+            <Tr key={index}>
               <Td>
-                <AcceptRejectButtons
-                  onApproveClick={() => onApproveClick(request.id)}
-                  onRejectClick={() => onRejectClick(request.id)}
+                <StatusIndicator status={request.status as RequestStatus} />
+              </Td>
+              {isPending ? (
+                <Td>
+                  <AcceptRejectButtons
+                    onApproveClick={() => onApproveClick(request.id)}
+                    onRejectClick={() => onRejectClick(request.id)}
+                  />
+                </Td>
+              ) : null}
+              <Td>
+                <DateRange start={request.startDate} end={request.endDate} />
+              </Td>
+              <Td>
+                <GuestName name={request.guestName} />
+              </Td>
+              <Td>
+                <RoomDescription
+                  numRooms={request.rooms}
+                  listingType={request.listingType}
                 />
               </Td>
-            ) : null}
-            <Td>
-              <DateRange start={request.startDate} end={request.endDate} />
-            </Td>
-            <Td>
-              <GuestName name={request.guestName} />
-            </Td>
-            <Td>
-              <RoomDescription
-                numRooms={request.rooms}
-                listingType={request.listingType}
-              />
-            </Td>
-            <Td>${request.payout}.00</Td>
-          </Tr>
-        ))}
-      </Tbody>
-    </Table>
+              <Td>${request.payout}.00</Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
+    </VStack>
   );
 }
 
@@ -159,8 +166,6 @@ function GuestName({ name }: { name: string }) {
   );
 }
 
-const removeLeadingZeros = (strNumber: string) => strNumber.replace(/^0+/, "");
-
 function DateRange({ start, end }: { start: string; end: string }) {
   const startDate = new Date(start);
   const endDate = new Date(end);
@@ -168,7 +173,7 @@ function DateRange({ start, end }: { start: string; end: string }) {
   const [, endMonth, endDay] = endDate.toDateString().split(" ");
 
   return (
-    <Text>
+    <Text fontStyle="italic">
       {startMonth} {removeLeadingZeros(startDay)} - {endMonth}{" "}
       {removeLeadingZeros(endDay)}
     </Text>
